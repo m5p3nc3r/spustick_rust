@@ -21,8 +21,16 @@ static mut USB_BUS: Option<UsbBusAllocator<hal::usb::UsbBus>> = None;
 /// The USB Human Interface Device Driver (shared with the interrupt).
 static mut USB_HID: Option<HIDClass<hal::usb::UsbBus>> = None;
 
+pub struct USBDeviceDetails<'a> {
+    pub manufacturer: &'a str,
+    pub product: &'a str,
+    pub serial_number: &'a str,
+    pub device_class: u8,
+}
+
 // Initialise the USB HID subsystem
 pub fn init_hid(
+    details: &'static USBDeviceDetails,
     ctrl_regs: USBCTRL_REGS,
     ctrl_dpram: USBCTRL_DPRAM,
     resets: &mut RESETS,
@@ -51,10 +59,10 @@ pub fn init_hid(
 
     // Create a USB device with a fake VID and PID
     let usb_dev = UsbDeviceBuilder::new(bus_ref, UsbVidPid(0x16c0, 0x27da))
-        .manufacturer("Fake company")
-        .product("Twitchy Mousey")
-        .serial_number("TEST")
-        .device_class(0) // misc
+        .manufacturer(details.manufacturer)
+        .product(details.product)
+        .serial_number(details.serial_number)
+        .device_class(details.device_class) // misc
         .build();
     unsafe {
         // Note (safety): This is safe as interrupts haven't been started yet

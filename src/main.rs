@@ -22,7 +22,17 @@ use rp_pico as bsp;
 use bsp::hal::clocks::Clock;
 use bsp::hal::pac;
 
-use crate::{hid::init_hid, joystick::SpustickReport};
+use crate::{
+    hid::{init_hid, USBDeviceDetails},
+    joystick::SpustickReport,
+};
+
+static DETAILS: USBDeviceDetails = USBDeviceDetails {
+    manufacturer: "Apptabulous",
+    product: "Spustick",
+    serial_number: "00000000",
+    device_class: 0,
+};
 
 #[entry]
 fn main() -> ! {
@@ -49,6 +59,7 @@ fn main() -> ! {
     .unwrap();
 
     init_hid(
+        &DETAILS,
         pac.USBCTRL_REGS,
         pac.USBCTRL_DPRAM,
         &mut pac.RESETS,
