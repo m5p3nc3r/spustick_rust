@@ -1,5 +1,6 @@
 use usbd_hid::descriptor::generator_prelude::*;
 
+#[derive(Default)]
 #[gen_hid_descriptor(
     (collection = APPLICATION, usage_page = GENERIC_DESKTOP, usage = GAMEPAD) = {
         (collection = PHYSICAL, usage = POINTER) = {

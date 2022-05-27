@@ -10,7 +10,7 @@ use usb_device::{class_prelude::UsbBusAllocator, device::UsbDevice};
 use usbd_hid::descriptor::generator_prelude::*;
 use usbd_hid::hid_class::HIDClass;
 
-use crate::joystick::SpustickReport;
+use crate::report::SpustickReport;
 
 /// The USB Device Driver (shared with the interrupt).
 static mut USB_DEVICE: Option<UsbDevice<hal::usb::UsbBus>> = None;
@@ -89,7 +89,7 @@ unsafe fn USBCTRL_IRQ() {
 /// Submit a new mouse movement report to the USB stack.
 ///
 /// We do this with interrupts disabled, to avoid a race hazard with the USB IRQ.
-pub fn push_mouse_movement(report: SpustickReport) -> Result<usize, usb_device::UsbError> {
+pub fn send_report(report: SpustickReport) -> Result<usize, usb_device::UsbError> {
     cortex_m::interrupt::free(|_| unsafe {
         // Now interrupts are disabled, grab the global variable and, if
         // available, send it a HID report
