@@ -3,37 +3,47 @@ use embedded_hal::digital::v2::InputPin;
 use rp_pico as bsp;
 
 use crate::report::SpustickReport;
-pub struct JoystickInput<UP, DOWN, LEFT, RIGHT>
+pub struct JoystickInput<UP, DOWN, LEFT, RIGHT, B1, B2>
 where
     UP: PinId,
     DOWN: PinId,
     LEFT: PinId,
     RIGHT: PinId,
+    B1: PinId,
+    B2: PinId,
 {
     up: Pin<UP, PullUpInput>,
     down: Pin<DOWN, PullUpInput>,
     left: Pin<LEFT, PullUpInput>,
     right: Pin<RIGHT, PullUpInput>,
+    b1: Pin<B1, PullUpInput>,
+    b2: Pin<B2, PullUpInput>,
 }
 
-impl<UP, DOWN, LEFT, RIGHT> JoystickInput<UP, DOWN, LEFT, RIGHT>
+impl<UP, DOWN, LEFT, RIGHT, B1, B2> JoystickInput<UP, DOWN, LEFT, RIGHT, B1, B2>
 where
     UP: PinId,
     DOWN: PinId,
     LEFT: PinId,
     RIGHT: PinId,
+    B1: PinId,
+    B2: PinId,
 {
     pub fn new(
         up: Pin<UP, PullUpInput>,
         down: Pin<DOWN, PullUpInput>,
         left: Pin<LEFT, PullUpInput>,
         right: Pin<RIGHT, PullUpInput>,
+        b1: Pin<B1, PullUpInput>,
+        b2: Pin<B2, PullUpInput>,
     ) -> Self {
         JoystickInput {
             up: up,
             down: down,
             left: left,
             right: right,
+            b1: b1,
+            b2: b2,
         }
     }
 
@@ -56,6 +66,12 @@ where
         }
         if self.right.is_low().unwrap() {
             report.x = i8::MAX;
+        }
+        if self.b1.is_low().unwrap() {
+            report.buttons |= 1 << 0;
+        }
+        if self.b2.is_low().unwrap() {
+            report.buttons |= 1 << 1;
         }
     }
 }

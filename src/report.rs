@@ -21,5 +21,5 @@ use usbd_hid::descriptor::generator_prelude::*;
 pub struct SpustickReport {
     pub x: i8,
     pub y: i8,
-    pub buttons: i8,
+    pub buttons: u8,
 }
