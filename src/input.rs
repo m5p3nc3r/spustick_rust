@@ -49,10 +49,10 @@ where
             report.y = i8::MAX;
         }
         if self.down.is_low().unwrap() {
-            report.y = i8::MIN;
+            report.y = i8::MIN + 1;
         }
         if self.left.is_low().unwrap() {
-            report.x = i8::MIN;
+            report.x = i8::MIN + 1;
         }
         if self.right.is_low().unwrap() {
             report.x = i8::MAX;
