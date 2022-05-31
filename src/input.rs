@@ -38,12 +38,12 @@ where
         b2: Pin<B2, PullUpInput>,
     ) -> Self {
         JoystickInput {
-            up: up,
-            down: down,
-            left: left,
-            right: right,
-            b1: b1,
-            b2: b2,
+            up,
+            down,
+            left,
+            right,
+            b1,
+            b2,
         }
     }
 
