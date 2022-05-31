@@ -1,5 +1,7 @@
 # Project template for rp2040-hal
 
+[![CI Checks](https://github.com/m5p3nc3r/spustick_rust/actions/workflows/ci_checks.yml/badge.svg)](https://github.com/m5p3nc3r/spustick_rust/actions/workflows/ci_checks.yml)
+
 This template is intended as a starting point for developing your own firmware based on the rp2040-hal.
 
 It includes all of the `knurling-rs` tooling as showcased in https://github.com/knurling-rs/app-template (`defmt`, `defmt-rtt`, `panic-probe`, `flip-link`) to make development as easy as possible.
