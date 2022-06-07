@@ -21,5 +21,15 @@ use usbd_hid::descriptor::generator_prelude::*;
 pub struct SpustickReport {
     pub x: i8,
     pub y: i8,
-    pub buttons: u8,
+    buttons: u8,
+}
+
+impl SpustickReport {
+    pub fn set_button(&mut self, i: u8, val: bool) {
+        self.buttons |= (val as u8) << i;
+    }
+
+    // pub fn get_button(self, i: u8) -> bool {
+    //     (self.buttons >> i & 0x1) == 0x01
+    // }
 }

@@ -49,10 +49,7 @@ where
 
     pub fn process(&self, report: &mut SpustickReport) {
         // Initialse the report to default values
-        // TODO: Should be able to use Default::default()?
-        report.x = 0;
-        report.y = 0;
-        report.buttons = 0;
+        *report = SpustickReport::default();
 
         // Update the report based on input switches
         if self.up.is_low().unwrap() {
@@ -68,10 +65,10 @@ where
             report.x = i8::MAX;
         }
         if self.b1.is_low().unwrap() {
-            report.buttons |= 1 << 0;
+            report.set_button(0, true);
         }
         if self.b2.is_low().unwrap() {
-            report.buttons |= 1 << 1;
+            report.set_button(1, true);
         }
     }
 }
